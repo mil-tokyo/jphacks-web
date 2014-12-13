@@ -7,5 +7,7 @@
 	<?php echo \Asset::js('app.js'); ?>
 </head>
 <body ng-app="App">
+	<div ng-controller="MainController">
+	</div>
 </body>
 </html>
