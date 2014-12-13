@@ -2,23 +2,22 @@
 
 namespace Fuel\Migrations;
 
-class Create_queues
+class Create_structures
 {
 	public function up()
 	{
-		\DBUtil::create_table('queues', array(
+		\DBUtil::create_table('structures', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true, 'unsigned' => true),
-			'user_id' => array('constraint' => 11, 'type' => 'int', 'null' => true),
-			'state' => array('type' => 'tinyint', 'unsigned' => true),
-			'started_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
+			'queue_id' => array('constraint' => 11, 'type' => 'int', 'unsigned' => true),
+			'json' => array('type' => 'text'),
 			'created_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 			'updated_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 
 		), array('id'), true, false, null, array(
 		array(
-			'key' => 'user_id',
+			'key' => 'queue_id',
 			'reference' => array(
-				'table' => 'users',
+				'table' => 'queues',
 				'column' => 'id',
 			),
 			'on_update' => 'CASCADE',
@@ -29,6 +28,6 @@ class Create_queues
 
 	public function down()
 	{
-		\DBUtil::drop_table('queues');
+		\DBUtil::drop_table('structures');
 	}
 }
