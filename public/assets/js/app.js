@@ -55,13 +55,16 @@ app.controller('MainController', function($scope, $http, $interval, $filter){
 		type: "data",
 		name: "source1",
 		input: "",
-		output: "k-means"
+		output: "k-means",
+    data : [[1,2],[1,3],[1,4],[10,1],[10.2],[10,3]]
 	},
 	{
-		type: "classifier.k-means",
+		type: "model",
 		name: "k-means1",
 		input: "source1",
-		output: "visualize1"
+		output: "visualize1",
+    model_type : "k-means",
+    params : {"cluster_num" : 2}
 	},
 	{
 		type: "visualize",
