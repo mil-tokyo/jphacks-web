@@ -45,7 +45,27 @@ class Controller_Api extends \Controller_Rest
 	public function get_result()
 	{
 		$queue_id = \Input::get('queue_id');
+
+		$queue = \Model_Queue::find($queue_id);
+		if ( ! $queue) {
+			$this->response(array('stat'=>0, 'msg' => 'No queue match'));
+			return;
+		}
+	
+		if ( ! $queue->result) {
+			$this->response(array('stat'=>-1, 'msg' => 'Running'));
+			return;
+		}
+
+		if ( ! $queue->result->json) {
+			$this->response(array('stat'=>0, 'msg' => 'Error: invalid result'));
+			return;
+		}
+
+		$result['stat'] = 1;
+		$result['result'] = json_decode($queue->result->json);
 		// mock
+		/*
 		$result = array(
 			'stat' => 1,
 			'result' => array(
@@ -61,6 +81,7 @@ class Controller_Api extends \Controller_Rest
 				)
 			)
 		);
+		*/
 
 		$this->response($result);
 	}
