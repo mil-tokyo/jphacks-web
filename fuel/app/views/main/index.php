@@ -14,13 +14,20 @@
                 <div id="pallet" class="col-md-3">
                     <button id="new-kmeans">K-means</button>
                     <button id="new-visualizer">Visualizer</button>
+
+                    <label>Input</label>
                 </div>
+
                 <div id="myholder" class="col-md-9">
                 </div>
 
-                <button id="execute" class="btn btn-primary">Execute</button>
+                <form id="executeForm" enctype="multipart/form-data">
+                    <input type="button" id="execute" class="btn btn-primary" value="Execute">
+                    <input type="file" name="file">
+                </form>
             </div>
         </div>
+
         <?php echo \Asset::js(array(
             'joint.min.js',
             'joint.shapes.devs.min.js',

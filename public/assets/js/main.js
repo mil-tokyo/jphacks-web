@@ -38,11 +38,11 @@ var m1 = new MlModel({
     },
     mlattrs: {
         type: "Data",
-        name: "source",
+        name: "source"/*,
         data: {
             data: [[1,2],[2,3],[3,4], [10,11],[11,12],[12,13]],
             label: [0,0,0,1,1,1]
-        }
+        }*/
     }
 });
 graph.addCell(m1);
@@ -58,6 +58,8 @@ $("#new-visualizer").click(function(){
 });
 $("#execute").click(function(){
     execute(graph);
+
+    return false;
 });
 
 function registerIdNameList(element){
@@ -124,17 +126,28 @@ var timer_check_result;
 function execute(_graph){
     var structure = integrateToArray(_graph);
     console.log(data);
+
+    var form = $('#executeForm').get()[0];
+    var formData = new FormData(form);
+
+    formData.append('structure', JSON.stringify(structure));
+
     $.ajax({
         url: "api/request.json",
         type: "post",
         dataType: "json",
+        data: formData,
+        /*
         data: {
             structure: JSON.stringify(structure)
         },
+        */
+        processData: false,
+        contentType: false,
         success: function(res){
             console.log(res);
             if (res['stat'] != 1){
-                alert('Fail');
+                alert('Fail: ' + res['msg']);
                 return;
             }
 
