@@ -5,20 +5,23 @@
         <?php echo \Asset::css(array(
             'joint.min.css',
             'joint.shapes.imgbox.css',
-            'bootstrap.min.css'
+            'bootstrap.min.css',
+            'style.css'
         )); ?>
     </head>
     <body>
         <div class="container">
-            <div class="row">
+            <div class="row" id="tool">
                 <div id="pallet" class="col-md-3">
-                    <button id="new-kmeans">K-means</button>
-                    <button id="new-visualizer">Visualizer</button>
-
-                    <label>Input</label>
+                    <button class="btn btn-primary" id="new-kmeans">K-means</button>
+                    <button class="btn btn-primary" id="new-visualizer">Visualizer</button>
                 </div>
 
-                <div id="myholder" class="col-md-9">
+                <div class="col-md-9">
+                    <div id="canvasBox" class="col-md-9">
+                        <div id="myholder">
+                        </div>
+                    </div>
                 </div>
 
                 <form id="executeForm" enctype="multipart/form-data">
