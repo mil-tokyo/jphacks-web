@@ -10,6 +10,9 @@
         )); ?>
     </head>
     <body>
+        <div id="loading">
+            <div id="loading-img"><?php echo \Asset::img('loading.gif'); ?></div>
+        </div>
         <div class="container">
             <div class="row" id="tool">
                 <div id="pallet" class="col-md-3">

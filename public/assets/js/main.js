@@ -151,6 +151,8 @@ function execute(_graph){
                 return;
             }
 
+            $("#loading").fadeIn();
+
             var queue_id = res['queue_id'];
             if (timer_check_result){
                 clearInterval(timer_check_result);
@@ -168,6 +170,7 @@ function execute(_graph){
                         if (res['stat'] == 1){
                             clearInterval(timer_check_result);
                             applyResult(_graph, res['result']);
+                            $("#loading").fadeOut();
                         }
                     }
                 });
