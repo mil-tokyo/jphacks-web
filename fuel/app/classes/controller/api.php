@@ -51,7 +51,7 @@ class Controller_Api extends \Controller_Rest
 			$this->response(array('stat'=>0, 'msg' => 'No queue match'));
 			return;
 		}
-	
+
 		if ( ! $queue->result) {
 			$this->response(array('stat'=>-1, 'msg' => 'Running'));
 			return;
@@ -114,22 +114,27 @@ class Controller_Api extends \Controller_Rest
 	}
 
 	private function parse_csv($path){
-		$res = array();
+		$res_label = array();
+		$res_data = array();
   // ファイルポインタを開く
 		$fp = fopen( $path, 'r' );
 
   // データが無くなるまでファイル(CSV)を１行ずつ読み込む
 		while( $ret_csv = fgetcsv( $fp, 256 ) ) {
-			$row = array();
-			for($i = 0; $i < count( $ret_csv ); ++$i ){
-				$row[$i] = (float)$ret_csv[$i];
-			}
+			$res_label[] = (int)$ret_csv[0];
 
-			$res[] = $row;
+			$row = array();
+			for($i = 1; $i < count( $ret_csv ); ++$i ){
+				$row[$i-1] = (float)$ret_csv[$i];
+			}
+			$res_data[] = $row;
 		}
 
   // 開いたファイルポインタを閉じる
 		fclose( $fp );
-		return $res;
+		return array(
+			'data' => $res_data,
+			'label' => $res_label,
+		);
 	}
 }
