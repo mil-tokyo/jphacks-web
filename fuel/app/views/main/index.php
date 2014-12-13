@@ -2,7 +2,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Machine Learning</title>
-        <?php echo \Asset::css('joint.min.css'); ?>
+        <?php echo \Asset::css(array(
+            'joint.min.css',
+            'joint.shapes.imgbox.css'
+        )); ?>
     </head>
     <body>
         <div id="pallet">
@@ -17,6 +20,8 @@
         <?php echo \Asset::js(array(
             'joint.min.js',
             'joint.shapes.devs.min.js',
+            'joint.shapes.erd.min.js',
+            'joint.shapes.imgbox.js',
             'joint.shapes.devs.mlmodel.js',
             'main.js'
         )); ?>

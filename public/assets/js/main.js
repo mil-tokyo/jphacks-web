@@ -1,5 +1,6 @@
 (function() {
 
+var id_name_dir = {};
 var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
     el: $('#myholder'),
@@ -23,6 +24,7 @@ var paper = new joint.dia.Paper({
     }
 });
 
+// create input object
 var m1 = new MlModel({
     position: { x: 50, y: 50 },
     size: { width: 90, height: 90 },
@@ -36,12 +38,17 @@ var m1 = new MlModel({
     },
     mlattrs: {
         type: "Data",
-        name: "source"
+        name: "source",
+        data: {
+            data: [[1,2],[2,3],[3,4], [10,11],[11,12],[12,13]],
+            label: [0,0,0,1,1,1]
+        }
     }
 });
 graph.addCell(m1);
+registerIdNameList(m1);
 
-names = {};
+
 
 $("#new-kmeans").click(function(){
     createKmeans(graph);
@@ -50,25 +57,18 @@ $("#new-visualizer").click(function(){
     createVisualizer(graph);
 });
 $("#execute").click(function(){
-    var structure = integrateToArray(graph);
-    console.log(data);
-    $.ajax({
-        url: "api/request.json",
-        type: "post",
-        data: {
-            structure: JSON.stringify(structure)
-        },
-        success: function(res){
-            console.log(res);
-        }
-    })
+    execute(graph);
 });
 
+function registerIdNameList(element){
+    id_name_dir[element.get('mlattrs')['name']] = element.id;
+}
+
 function createKmeans(graph){
-    if (typeof self.count === 'undefined') {
-        self.count = 0;
+    if (typeof createKmeans.count === 'undefined') {
+        createKmeans.count = 0;
     }
-    self.count++;
+    createKmeans.count++;
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
@@ -83,7 +83,7 @@ function createKmeans(graph){
         },
         mlattrs: {
             type: "Model",
-            name: "kmeans"+self.count,
+            name: "kmeans"+createKmeans.count,
             model_type: "KMeans",
             params: {
                 n_clusters: "2"
@@ -91,14 +91,14 @@ function createKmeans(graph){
         }
     });
     graph.addCell(m1);
-
+    registerIdNameList(m1);
 }
 
 function createVisualizer(graph){
-    if (typeof self.count === 'undefined') {
-        self.count = 0;
+    if (typeof createVisualizer.count === 'undefined') {
+        createVisualizer.count = 0;
     }
-    self.count++;
+    createVisualizer.count++;
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
@@ -113,10 +113,93 @@ function createVisualizer(graph){
         },
         mlattrs: {
             type: "Visualizer",
-            name: "visualizer"+self.count,
+            name: "visualizer"+createVisualizer.count,
         }
     });
     graph.addCell(m1);
+    registerIdNameList(m1);
+}
+
+var timer_check_result;
+function execute(_graph){
+    var structure = integrateToArray(_graph);
+    console.log(data);
+    $.ajax({
+        url: "api/request.json",
+        type: "post",
+        dataType: "json",
+        data: {
+            structure: JSON.stringify(structure)
+        },
+        success: function(res){
+            console.log(res);
+            if (res['stat'] != 1){
+                alert('Fail');
+                return;
+            }
+
+            var queue_id = res['queue_id'];
+            if (timer_check_result){
+                clearInterval(timer_check_result);
+            }
+            timer_check_result = setInterval(function(){
+                $.ajax({
+                    url: "api/result.json",
+                    type: "get",
+                    async: false,
+                    dataType: "json",
+                    data: {
+                        queue_id: queue_id
+                    },
+                    success: function(res){
+                        if (res['stat'] == 1){
+                            clearInterval(timer_check_result);
+                            applyResult(_graph, res['result']);
+                        }
+                    }
+                });
+            }, 1000);
+        }
+    });
+}
+
+function applyResult(graph, result){
+    _.each(result, function(row){
+        var name = row['name'];
+        var element = graph.getCell(id_name_dir[name]);
+        if (element) {
+            switch (element.get('mlattrs')['type']){
+                case ('Visualizer'):
+                applyResultVisualizer(graph, element, row);
+                break;
+            }
+        }
+    });
+}
+
+function applyResultVisualizer(graph, element, result){
+    var x=100;
+    var y=200;
+
+    var n_imgbox = 0;
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.html.Element){
+            neighbor.remove();
+        }
+    });
+
+    var el1 = new joint.shapes.html.Element({
+        position: { x: x, y: y },
+        size: { width: 170, height: 100 },
+        img: result['img'] }
+        );
+    var l = new joint.dia.Link({
+        source: { id: el1.id },
+        target: { id: element.id },
+        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+    });
+
+    graph.addCells([el1, element, l]);
 }
 
 function integrateToArray(graph){
@@ -128,14 +211,17 @@ function integrateToArray(graph){
             var target_id = link.get('target').id;
             var source = graph.getCell(source_id);
             var target = graph.getCell(target_id);
-            var source_name = source.get('mlattrs')['name'];
-            var target_name = target.get('mlattrs')['name'];
 
-            data[source_name] = _.defaults(source.get('mlattrs'), data[source_name]);
-            data[source_name].output = target_name;
+            if (source instanceof MlModel && target instanceof MlModel){
+                var source_name = source.get('mlattrs')['name'];
+                var target_name = target.get('mlattrs')['name'];
 
-            data[target_name] = _.defaults(target.get('mlattrs'), data[target_name]);
-            data[target_name].input = source_name;
+                data[source_name] = _.defaults(source.get('mlattrs'), data[source_name]);
+                data[source_name].output = target_name;
+
+                data[target_name] = _.defaults(target.get('mlattrs'), data[target_name]);
+                data[target_name].input = source_name;
+            }
         });
     });
 

@@ -17,17 +17,26 @@ class Controller_Api extends \Controller_Rest
 
 		$queue->save();
 
-		$this->response(array('stat' => 1));
+		$this->response(array('stat' => 1, 'queue_id' => $queue->id));
 	}
 
 	public function get_result()
 	{
+		$queue_id = \Input::get('queue_id');
 		// mock
 		$result = array(
-			array(
-				'type' => 'visualize',
-				'name' => 'vis1',
-				'img' => 'test.png'
+			'stat' => 1,
+			'result' => array(
+				array(
+					'type' => 'Visualizer',
+					'name' => 'visualizer1',
+					'img' => 'imgs/test.jpg'
+				),
+				array(
+					'type' => 'Visualizer',
+					'name' => 'visualizer2',
+					'img' => 'imgs/test2.jpg'
+				)
 			)
 		);
 
