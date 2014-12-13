@@ -4,19 +4,23 @@
         <title>Machine Learning</title>
         <?php echo \Asset::css(array(
             'joint.min.css',
-            'joint.shapes.imgbox.css'
+            'joint.shapes.imgbox.css',
+            'bootstrap.min.css'
         )); ?>
     </head>
     <body>
-        <div id="pallet">
-            <button id="new-kmeans">K-means</button>
-            <button id="new-visualizer">Visualizer</button>
-        </div>
-        <div id="myholder">
-        </div>
+        <div class="container">
+            <div class="row">
+                <div id="pallet" class="col-md-3">
+                    <button id="new-kmeans">K-means</button>
+                    <button id="new-visualizer">Visualizer</button>
+                </div>
+                <div id="myholder" class="col-md-9">
+                </div>
 
-        <button id="execute">Execute</button>
-
+                <button id="execute" class="btn btn-primary">Execute</button>
+            </div>
+        </div>
         <?php echo \Asset::js(array(
             'joint.min.js',
             'joint.shapes.devs.min.js',
