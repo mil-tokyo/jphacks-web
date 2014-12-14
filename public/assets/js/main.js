@@ -207,7 +207,7 @@ function applyResultVisualizer(graph, element, result){
     var el1 = new joint.shapes.html.Element({
         position: { x: x, y: y },
         size: { width: 170, height: 100 },
-        img: result['img'] }
+        img: result['img_src'] }
         );
     var l = new joint.dia.Link({
         source: { id: el1.id },

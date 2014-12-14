@@ -114,13 +114,21 @@ class Controller_Api extends \Controller_Rest
 	}
 
 	private function parse_csv($path){
-		$res_label = array();
-		$res_data = array();
+//		$res_label = array();
+//		$res_data = array();
+		$res = array();
   // ファイルポインタを開く
 		$fp = fopen( $path, 'r' );
 
   // データが無くなるまでファイル(CSV)を１行ずつ読み込む
 		while( $ret_csv = fgetcsv( $fp, 256 ) ) {
+			$row = array();
+			$row[0] = (int)$ret_csv[0];
+			for($i = 1; $i < count( $ret_csv ); ++$i ){
+				$row[$i] = (float)$ret_csv[$i];
+			}
+			$res[] = $row;
+			/*
 			$res_label[] = (int)$ret_csv[0];
 
 			$row = array();
@@ -128,13 +136,17 @@ class Controller_Api extends \Controller_Rest
 				$row[$i-1] = (float)$ret_csv[$i];
 			}
 			$res_data[] = $row;
+			*/
 		}
 
   // 開いたファイルポインタを閉じる
 		fclose( $fp );
+		return array('data' => $res);
+		/*
 		return array(
 			'data' => $res_data,
 			'label' => $res_label,
 		);
+		*/
 	}
 }
