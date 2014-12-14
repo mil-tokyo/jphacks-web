@@ -31,7 +31,7 @@ body{
 	min-height: 54px;
 	cursor: pointer;
 	color: white;
-	font-size: 2em;
+	font-size: 1.7em;
 	padding-right: 48px;
 	border-bottom: solid 1px white;
 }
@@ -99,4 +99,9 @@ body{
   margin: 0;
   font-size: 100px;
   cursor: pointer;
+}
+
+.thumb {
+	max-width: 200px;
+	max-height: 200px;
 }

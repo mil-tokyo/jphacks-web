@@ -71,6 +71,7 @@
                         Select File
                         <input type="file" name="file" value="Select file">
                     </div>
+                    <output id="list"></output>
                     <input type="button" id="execute" class="btn btn-primary btn-block btn-bg" value="Execute">
                 </form>
             </div>

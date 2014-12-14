@@ -75,6 +75,29 @@ $("#execute").click(function(){
 
     return false;
 });
+$("#executeForm").change(function(){
+        var filelist = $('#executeForm input[type=file]').get()[0].files;
+        var f = filelist[0];
+        var reader = new FileReader();
+
+        $("#list").empty();
+        console.log(f);
+
+        if (f.type.match('image.*')) {
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                    '" title="', escape(theFile.name), '"/>'].join('');
+                    document.getElementById('list').insertBefore(span, null);
+                };
+            })(f);
+            reader.readAsDataURL(f);
+        } else {
+            $("#list").text(f.name);
+        }
+
+});
 
 function registerIdNameList(element){
     id_name_dir[element.get('mlattrs')['name']] = element.id;
@@ -361,7 +384,7 @@ function applyResultModel(graph, element, result){
         var cell = new joint.shapes.erd.Entity({
             position: { x: 200, y: 200 },
             attrs: {
-                text: { text: 'predicted as:\n' + result['predict_class'] }
+                text: { text: result['predict_class'], "font-size": "32px" },
             }
         });
         var l = new joint.dia.Link({
