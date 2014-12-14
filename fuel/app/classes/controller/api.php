@@ -96,9 +96,9 @@ class Controller_Api extends \Controller_Rest
 	{
         // 初期設定
         $config = array(
-            'path' => APPPATH.DS.'tmp',
+            'path' => APPPATH.DS.'..'.DS.'..'.DS.'images',
             'randomize' => true,
-            'ext_whitelist' => array('csv'),
+            'ext_whitelist' => array('csv', 'png', 'jpg', 'jpeg'),
         );
  
         // アップロード基本プロセス実行
@@ -111,9 +111,21 @@ class Controller_Api extends \Controller_Rest
             Upload::save();
  
             $fileinfo = Upload::get_files();
-            $tmppath = $fileinfo[0]['file'];
-            $res = $this->parse_csv($tmppath);
-            return $res ?: false;
+            switch($fileinfo[0]['type']){
+            	case 'image/jpeg':
+            	case 'image/png':
+            	$res = array();
+            	$img_path = $fileinfo[0]['saved_to'].$fileinfo[0]['saved_as'];
+            	$res['data'] = $img_path;
+            	break;
+
+            	case 'text/comma-separated-values':
+            	case 'text/csv':
+            	$tmppath = $fileinfo[0]['file'];
+            	$res = $this->parse_csv($tmppath);
+            	break;
+            }
+            return isset($res) ? $res : false;
         }
  
         return false;
@@ -154,5 +166,9 @@ class Controller_Api extends \Controller_Rest
 			'label' => $res_label,
 		);
 		*/
+	}
+
+	private function process_image($path){
+
 	}
 }

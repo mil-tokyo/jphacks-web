@@ -18,6 +18,11 @@
                     <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>
                     <span class="clearfix"></span>
                 </p>
+                <p class="btn-row" id="new-im-classifier">
+                    Image Classifier
+                    <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>
+                    <span class="clearfix"></span>
+                </p>
                 <p class="btn-row" id="new-visualizer">
                     Visualizer
                     <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>

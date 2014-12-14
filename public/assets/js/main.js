@@ -59,6 +59,9 @@ $("#new-svm").click(function(){
 $("#new-linear-reg").click(function(){
     createLinearReg(graph);
 });
+$("#new-im-classifier").click(function(){
+    createImageClassifier(graph);
+});
 $("#new-visualizer").click(function(){
     createVisualizer(graph);
 });
@@ -154,6 +157,36 @@ function createLinearReg(graph){
             name: "linear-reg"+createLinearReg.count,
             model_type: "LinearRegression",
             params: {}
+        }
+    });
+    graph.addCell(m1);
+    registerIdNameList(m1);
+}
+
+function createImageClassifier(graph){
+    if (typeof createImageClassifier.count === 'undefined') {
+        createImageClassifier.count = 0;
+    }
+    createImageClassifier.count++;
+
+    var m1 = new MlModel({
+        position: { x: 50, y: 50 },
+        size: { width: 90, height: 90 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        attrs: {
+            '.label': { text: 'Image Classifier', 'ref-x': .4, 'ref-y': .2 },
+            rect: { fill: '#2ECC71' },
+            '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
+            '.outPorts circle': { fill: '#E74C3C', type: 'output' }
+        },
+        mlattrs: {
+            type: "Model",
+            name: "imclass"+createImageClassifier.count,
+            model_type: "LinearSVC",
+            params: {
+                C: 1.0
+            }
         }
     });
     graph.addCell(m1);
@@ -256,6 +289,10 @@ function applyResult(graph, result){
                 case ('Visualizer'):
                 applyResultVisualizer(graph, element, row);
                 break;
+
+                case ('Model'):
+                applyResultModel(graph, element, row);
+                break;
             }
         }
     });
@@ -265,25 +302,50 @@ function applyResultVisualizer(graph, element, result){
     var x=100;
     var y=200;
 
-    var n_imgbox = 0;
     _.each(graph.getNeighbors(element), function(neighbor){
         if (neighbor instanceof joint.shapes.html.Element){
             neighbor.remove();
         }
     });
 
-    var el1 = new joint.shapes.html.Element({
-        position: { x: x, y: y },
-        size: { width: 170, height: 100 },
-        img: result['img_src'] }
-        );
-    var l = new joint.dia.Link({
-        source: { id: el1.id },
-        target: { id: element.id },
-        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+    if ('img_src' in result){
+        var el1 = new joint.shapes.html.Element({
+            position: { x: x, y: y },
+            size: { width: 170, height: 100 },
+            img: result['img_src'] }
+            );
+        var l = new joint.dia.Link({
+            source: { id: el1.id },
+            target: { id: element.id },
+            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+        });
+
+        graph.addCells([el1, element, l]);
+    }
+}
+
+function applyResultModel(graph, element, result){
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.erd.Entity){
+            neighbor.remove();
+        }
     });
 
-    graph.addCells([el1, element, l]);
+    if ('predict_class' in result) {
+        var cell = new joint.shapes.erd.Entity({
+            position: { x: 200, y: 200 },
+            attrs: {
+                text: { text: 'Input image is predicted as:\n' + result['predict_class'] }
+            }
+        });
+        var l = new joint.dia.Link({
+            source: { id: cell.id },
+            target: { id: element.id },
+            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+        });
+
+        graph.addCells([cell, element, l]);
+    }
 }
 
 function integrateToArray(graph){
