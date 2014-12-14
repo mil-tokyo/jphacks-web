@@ -65,10 +65,14 @@
                     <div id="myholder">
                     </div>
                 </div>
+
+                <form id="executeForm" enctype="multipart/form-data">
+                    <div class="file">
+                        Select File
+                        <input type="file" name="file" value="Select file">
+                    </div>
+                    <input type="button" id="execute" class="btn btn-primary btn-block btn-bg" value="Execute">
+                </form>
             </div>
 
-            <form id="executeForm" enctype="multipart/form-data">
-                <input type="button" id="execute" class="btn btn-primary" value="Execute">
-                <input type="file" name="file">
-            </form>
         </div>
