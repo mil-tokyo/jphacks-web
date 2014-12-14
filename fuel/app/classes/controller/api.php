@@ -142,8 +142,7 @@ class Controller_Api extends \Controller_Rest
   // データが無くなるまでファイル(CSV)を１行ずつ読み込む
 		while( $ret_csv = fgetcsv( $fp, 256 ) ) {
 			$row = array();
-			$row[0] = (int)$ret_csv[0];
-			for($i = 1; $i < count( $ret_csv ); ++$i ){
+			for($i = 0; $i < count( $ret_csv ); ++$i ){
 				$row[$i] = (float)$ret_csv[$i];
 			}
 			$res[] = $row;
