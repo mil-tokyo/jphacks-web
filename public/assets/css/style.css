@@ -1,11 +1,21 @@
+body{
+	height: 100%;
+}
+
 #tool{
 	position: relative;
+	margin-top: 10px;
+	height: 100%;
+}
+
+#pallet-wrapper{
+	width: 100%;
 	height: 500px;
+	overflow: auto;
 }
 
 #pallet{
 	padding: 20px 5px 0;
-	height: 100%;
 	background-color: #000000;
 }
 
@@ -33,6 +43,11 @@
 	right: 0;
 	width: 48px;
 	height: 48px;
+}
+
+#pallet .btn-row small{
+	display: block;
+	font-size: 0.5em;
 }
 
 #canvasBox{

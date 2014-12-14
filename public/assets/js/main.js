@@ -97,7 +97,7 @@ function createKmeans(graph){
             name: "kmeans"+createKmeans.count,
             model_type: "KMeans",
             params: {
-                n_clusters: 2
+                n_clusters: 5
             }
         }
     });
@@ -335,7 +335,7 @@ function applyResultModel(graph, element, result){
         var cell = new joint.shapes.erd.Entity({
             position: { x: 200, y: 200 },
             attrs: {
-                text: { text: 'Input image is predicted as:\n' + result['predict_class'] }
+                text: { text: 'predicted as:\n' + result['predict_class'] }
             }
         });
         var l = new joint.dia.Link({

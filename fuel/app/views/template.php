@@ -26,7 +26,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a href="#"><?php echo \Asset::img('name_logo.png', array('height'=> '45')); ?></a>
+				<a href="#"><?php echo \Asset::img('insight_logo.png', array('height'=> '45')); ?></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">

@@ -32,3 +32,6 @@ desktop.ini
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
 /fuel/app/config/development/migrations.php
+
+# user generated
+uploaded

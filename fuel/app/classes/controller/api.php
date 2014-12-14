@@ -96,7 +96,8 @@ class Controller_Api extends \Controller_Rest
 	{
         // 初期設定
         $config = array(
-            'path' => APPPATH.DS.'..'.DS.'..'.DS.'images',
+            'path' => APPPATH.DS.'..'.DS.'..'.DS.'uploaded',
+        //    'path' => APPPATH.DS.'tmp',
             'randomize' => true,
             'ext_whitelist' => array('csv', 'png', 'jpg', 'jpeg'),
         );
@@ -121,7 +122,7 @@ class Controller_Api extends \Controller_Rest
 
             	case 'text/comma-separated-values':
             	case 'text/csv':
-            	$tmppath = $fileinfo[0]['file'];
+            	$tmppath = $fileinfo[0]['saved_to'].$fileinfo[0]['saved_as'];;
             	$res = $this->parse_csv($tmppath);
             	break;
             }
