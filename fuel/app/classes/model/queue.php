@@ -48,13 +48,6 @@ class Model_Queue extends \Orm\Model
 		return $val;
 	}
 
-	public static function forge($data = Array(), $new = true, $view = NULL, $cache = true)
-	{
-		$entity = parent::forge($data, $new, $view, $cache);
-		$entity->set_state_wait();
-		return $entity;
-	}
-
 	public function set_state_wait()
 	{
 		$this->set('state', static::STATE_WAIT);

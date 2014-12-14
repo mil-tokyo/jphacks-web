@@ -6,7 +6,16 @@
             <div id="pallet" class="col-md-3">
                 <p class="btn-row" id="new-kmeans">
                     K-means
-                    <?php echo \Asset::img('kmeans.png', array('class' => 'pull-right')); ?>
+                    <?php echo \Asset::img('kmeans.png'); ?>
+                </p>
+                <p class="btn-row" id="new-svm">
+                    SVM
+                    <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>
+                    <span class="clearfix"></span>
+                </p>
+                <p class="btn-row" id="new-linear-reg">
+                    Linear Regression
+                    <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>
                     <span class="clearfix"></span>
                 </p>
                 <p class="btn-row" id="new-visualizer">

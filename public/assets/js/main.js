@@ -53,6 +53,12 @@ registerIdNameList(m1);
 $("#new-kmeans").click(function(){
     createKmeans(graph);
 });
+$("#new-svm").click(function(){
+    createSVM(graph);
+});
+$("#new-linear-reg").click(function(){
+    createLinearReg(graph);
+});
 $("#new-visualizer").click(function(){
     createVisualizer(graph);
 });
@@ -90,6 +96,64 @@ function createKmeans(graph){
             params: {
                 n_clusters: 2
             }
+        }
+    });
+    graph.addCell(m1);
+    registerIdNameList(m1);
+}
+
+function createSVM(graph){
+    if (typeof createSVM.count === 'undefined') {
+        createSVM.count = 0;
+    }
+    createSVM.count++;
+
+    var m1 = new MlModel({
+        position: { x: 50, y: 50 },
+        size: { width: 90, height: 90 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        attrs: {
+            '.label': { text: 'SVM', 'ref-x': .4, 'ref-y': .2 },
+            rect: { fill: '#2ECC71' },
+            '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
+            '.outPorts circle': { fill: '#E74C3C', type: 'output' }
+        },
+        mlattrs: {
+            type: "Model",
+            name: "svc"+createSVM.count,
+            model_type: "SVC",
+            params: {
+                kernel: "linear"
+            }
+        }
+    });
+    graph.addCell(m1);
+    registerIdNameList(m1);
+}
+
+function createLinearReg(graph){
+    if (typeof createLinearReg.count === 'undefined') {
+        createLinearReg.count = 0;
+    }
+    createLinearReg.count++;
+
+    var m1 = new MlModel({
+        position: { x: 50, y: 50 },
+        size: { width: 90, height: 90 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        attrs: {
+            '.label': { text: 'Linear Regression', 'ref-x': .4, 'ref-y': .2 },
+            rect: { fill: '#2ECC71' },
+            '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
+            '.outPorts circle': { fill: '#E74C3C', type: 'output' }
+        },
+        mlattrs: {
+            type: "Model",
+            name: "linear-reg"+createLinearReg.count,
+            model_type: "LinearRegression",
+            params: {}
         }
     });
     graph.addCell(m1);
@@ -171,6 +235,10 @@ function execute(_graph){
                             clearInterval(timer_check_result);
                             applyResult(_graph, res['result']);
                             $("#loading").fadeOut();
+                        } else if (res['stat'] == 0){
+                            clearInterval(timer_check_result);
+                            $("#loading").fadeOut();
+                            alert('Error: ' + res['msg']);
                         }
                     }
                 });
@@ -234,13 +302,17 @@ function integrateToArray(graph){
                 var source_data = source.get('mlattrs');
                 var target_data = target.get('mlattrs');
 
-                source_data.input = ""; source_data.output = "";
                 data[source_name] = _.defaults(source.get('mlattrs'), data[source_name]);
                 data[source_name].output = target_name;
+                if (typeof data[source_name].input === "undefined"){
+                    data[source_name].input = "";
+                }
 
-                target_data.input = ""; target_data.output = "";
                 data[target_name] = _.defaults(target.get('mlattrs'), data[target_name]);
                 data[target_name].input = source_name;
+                if (typeof data[target_name].output === "undefined"){
+                    data[target_name].output = "";
+                }
             }
         });
     });
@@ -252,4 +324,9 @@ function integrateToArray(graph){
 
     return dataArr;
 }
-}())
+}());
+
+function openImageModal(imgpath){
+    console.log('open!');
+    window.open(imgpath,'win','width=500,height=400,menubar=yes,status=yes,scrollbars=yes');
+}

@@ -35,6 +35,7 @@ class Controller_Api extends \Controller_Rest
 		$structure->set('json', json_encode($data));
 
 		$queue = \Model_Queue::forge();
+		$queue->set_state_wait();
 		$queue->structure = $structure;
 
 		$queue->save();
@@ -49,6 +50,11 @@ class Controller_Api extends \Controller_Rest
 		$queue = \Model_Queue::find($queue_id);
 		if ( ! $queue) {
 			$this->response(array('stat'=>0, 'msg' => 'No queue match'));
+			return;
+		}
+
+		if ( $queue->state == 10) {
+			$this->response(array('stat'=>0, 'msg' => 'Error occured'));
 			return;
 		}
 

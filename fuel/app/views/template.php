@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title><?php echo $title; ?></title>
+	<title>Insight</title>
 	<?php if (isset($css)): ?>
 	<?php echo \Asset::css($css); ?>
 	<?php else: ?>
@@ -13,7 +13,7 @@
 	</style>
 	<?php echo Asset::js(array(
 		'http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js',
-		'bootstrap.js'
+//		'bootstrap.js'
 	)); ?>
 </head>
 <body>
@@ -58,8 +58,6 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1><?php echo $title; ?></h1>
-				<hr>
 <?php if (Session::get_flash('success')): ?>
 				<div class="alert alert-success alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

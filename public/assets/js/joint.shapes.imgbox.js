@@ -31,8 +31,11 @@ joint.shapes.html.ElementView = joint.dia.ElementView.extend({
 
         this.$box.find('img').on('mousedown click', function(evt) {
             evt.stopPropagation();
+            openImageModal();
             console.log('click');
             console.log($(evt.target));
+            var $img = $(evt.target);
+            openImageModal($img.attr('src'));
         });
 
         this.$box.find('.delete').on('click', _.bind(this.model.remove, this.model));

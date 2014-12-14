@@ -5,7 +5,6 @@ class Controller_Main extends \Controller_Base
 	{
 		$view = \View::forge('main/index');
 
-		$this->template->title = 'Insight';
 		$this->template->css = array(
             'joint.min.css',
             'joint.shapes.imgbox.css',
