@@ -26,7 +26,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Insight</a>
+				<a href="#"><?php echo \Asset::img('name_logo.png', array('height'=> '45')); ?></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -34,9 +34,12 @@
 						<?php echo Html::anchor('main', 'Toolbox') ?>
 					</li>
 
-					<li><a href="#">hoge</a></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Tutorial</a></li>
+					<li><a href="#">Community</a></li>
+					<li><a href="#">Settings</a></li>
 					<?php if ($current_user): ?>
 					<li class="dropdown">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#"><?php echo $current_user->username ?> <b class="caret"></b></a>

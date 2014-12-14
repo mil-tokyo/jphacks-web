@@ -10,8 +10,19 @@
 }
 
 #pallet .btn{
-	display: block;
+	//display: block;
 	margin-bottom: 10px;
+}
+
+#pallet .btn-row{
+	cursor: pointer;
+	color: white;
+	font-size: 2em;
+}
+
+#pallet .btn-row img{
+	width: 48px;
+	height: 48px;
 }
 
 #canvasBox{

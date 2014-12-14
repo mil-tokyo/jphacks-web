@@ -88,7 +88,7 @@ function createKmeans(graph){
             name: "kmeans"+createKmeans.count,
             model_type: "KMeans",
             params: {
-                n_clusters: "2"
+                n_clusters: 2
             }
         }
     });
@@ -231,10 +231,14 @@ function integrateToArray(graph){
             if (source instanceof MlModel && target instanceof MlModel){
                 var source_name = source.get('mlattrs')['name'];
                 var target_name = target.get('mlattrs')['name'];
+                var source_data = source.get('mlattrs');
+                var target_data = target.get('mlattrs');
 
+                source_data.input = ""; source_data.output = "";
                 data[source_name] = _.defaults(source.get('mlattrs'), data[source_name]);
                 data[source_name].output = target_name;
 
+                target_data.input = ""; target_data.output = "";
                 data[target_name] = _.defaults(target.get('mlattrs'), data[target_name]);
                 data[target_name].input = source_name;
             }

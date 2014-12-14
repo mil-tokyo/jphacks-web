@@ -4,8 +4,16 @@
         </div>
         <div class="row" id="tool">
             <div id="pallet" class="col-md-3">
-                <button class="btn btn-primary" id="new-kmeans">K-means</button>
-                <button class="btn btn-primary" id="new-visualizer">Visualizer</button>
+                <p class="btn-row" id="new-kmeans">
+                    K-means
+                    <?php echo \Asset::img('kmeans.png', array('class' => 'pull-right')); ?>
+                    <span class="clearfix"></span>
+                </p>
+                <p class="btn-row" id="new-visualizer">
+                    Visualizer
+                    <?php echo \Asset::img('knn.png', array('class' => 'pull-right')); ?>
+                    <span class="clearfix"></span>
+                </p>
             </div>
 
             <div class="col-md-9">
