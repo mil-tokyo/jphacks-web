@@ -24,14 +24,19 @@ var paper = new joint.dia.Paper({
     }
 });
 
+// icon size
+var panel_width = 120, panel_height = 120;
+var icon_width = 100, icon_height = 100;
+var icon_left = (panel_width - icon_width)/2, icon_top = (panel_height - icon_height)/2;
+
 // create input object
 var m1 = new MlModel({
     position: { x: 50, y: 50 },
-    size: { width: 90, height: 90 },
+    size: { width: panel_width, height: panel_height },
     //inPorts: ['in'],
     outPorts: ['out'],
     attrs: {
-        '.label': { text: 'Input', 'ref-x': .4, 'ref-y': .2 },
+        '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
         rect: { fill: '#2ECC71' },
         '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
         '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -48,7 +53,7 @@ var m1 = new MlModel({
 graph.addCell(m1);
 registerIdNameList(m1);
 
-
+appendImageToElement(m1, paper, 'assets/img/input.png');
 
 $("#new-kmeans").click(function(){
     createKmeans(graph);
@@ -75,6 +80,22 @@ function registerIdNameList(element){
     id_name_dir[element.get('mlattrs')['name']] = element.id;
 }
 
+function appendImageToElement(element, paper, img_path){
+    var img = document.createElementNS('http://www.w3.org/2000/svg','image');
+    img.setAttributeNS(null,'height', icon_height);
+    img.setAttributeNS(null,'width', icon_width);
+    img.setAttributeNS('http://www.w3.org/1999/xlink','href',img_path);
+    img.setAttributeNS(null,'x', icon_left);
+    img.setAttributeNS(null,'y', icon_top);
+    img.setAttributeNS(null, 'visibility', 'visible');
+    var view = element.findView(paper);
+    var $svg = $(view.el).children('g');
+    $svg.append(img);
+    $svg = $svg.find('.body');
+    $svg.attr('fill', '#efefef');
+    $svg.attr('stroke', 'none');
+}
+
 function createKmeans(graph){
     if (typeof createKmeans.count === 'undefined') {
         createKmeans.count = 0;
@@ -83,11 +104,11 @@ function createKmeans(graph){
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
-        size: { width: 90, height: 90 },
+        size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
         attrs: {
-            '.label': { text: 'k-Means', 'ref-x': .4, 'ref-y': .2 },
+            '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
             '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
             '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -102,6 +123,7 @@ function createKmeans(graph){
         }
     });
     graph.addCell(m1);
+    appendImageToElement(m1, paper, 'assets/img/kmeans.png');
     registerIdNameList(m1);
 }
 
@@ -113,11 +135,11 @@ function createSVM(graph){
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
-        size: { width: 90, height: 90 },
+        size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
         attrs: {
-            '.label': { text: 'SVM', 'ref-x': .4, 'ref-y': .2 },
+            '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
             '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
             '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -132,6 +154,7 @@ function createSVM(graph){
         }
     });
     graph.addCell(m1);
+    appendImageToElement(m1, paper, 'assets/img/svm.png');
     registerIdNameList(m1);
 }
 
@@ -143,11 +166,11 @@ function createLinearReg(graph){
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
-        size: { width: 90, height: 90 },
+        size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
         attrs: {
-            '.label': { text: 'Linear Regression', 'ref-x': .4, 'ref-y': .2 },
+            '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
             '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
             '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -160,6 +183,7 @@ function createLinearReg(graph){
         }
     });
     graph.addCell(m1);
+    appendImageToElement(m1, paper, 'assets/img/linreg.png');
     registerIdNameList(m1);
 }
 
@@ -171,11 +195,11 @@ function createImageClassifier(graph){
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
-        size: { width: 90, height: 90 },
+        size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
         attrs: {
-            '.label': { text: 'Image Classifier', 'ref-x': .4, 'ref-y': .2 },
+            '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
             '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
             '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -190,6 +214,7 @@ function createImageClassifier(graph){
         }
     });
     graph.addCell(m1);
+    appendImageToElement(m1, paper, 'assets/img/cls.png');
     registerIdNameList(m1);
 }
 
@@ -201,11 +226,11 @@ function createVisualizer(graph){
 
     var m1 = new MlModel({
         position: { x: 50, y: 50 },
-        size: { width: 90, height: 90 },
+        size: { width: panel_width, height: panel_width },
         inPorts: ['in'],
         //outPorts: ['out'],
         attrs: {
-            '.label': { text: 'Visualizer', 'ref-x': .4, 'ref-y': .2 },
+            '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
             '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
             '.outPorts circle': { fill: '#E74C3C', type: 'output' }
@@ -216,6 +241,7 @@ function createVisualizer(graph){
         }
     });
     graph.addCell(m1);
+    appendImageToElement(m1, paper, 'assets/img/vis.png');
     registerIdNameList(m1);
 }
 
