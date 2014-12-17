@@ -12,6 +12,7 @@ class Controller_Main extends \Controller_Base
             'style.css'
         );
 		$this->template->js = array(
+			'bootstrap.js',
             'joint.min.js',
             'joint.shapes.devs.min.js',
             'joint.shapes.erd.min.js',
