@@ -75,7 +75,7 @@
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
                                 <div class="panel-body">
                                     <p class="btn-row" id="new-im-classifier">
-                                        Image Classifier
+                                        HOG - SVM
                                         <?php echo \Asset::img('cls.png', array('class' => 'pull-right')); ?>
                                         <span class="clearfix"></span>
                                     </p>
@@ -144,6 +144,7 @@
                     </div>
                 </div>
 
+                <!--
                 <form id="executeForm" enctype="multipart/form-data">
                     <div class="file">
                         Select File
@@ -152,6 +153,8 @@
                     <output id="list"></output>
                     <input type="button" id="execute" class="btn btn-primary btn-block btn-bg" value="Execute">
                 </form>
+            -->
             </div>
 
         </div>
+

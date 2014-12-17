@@ -4,7 +4,7 @@ var id_name_dir = {};
 var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
     el: $('#myholder'),
-    width: 1000, height: 400, gridSize: 1,
+    width: 1000, height: 500, gridSize: 1,
     model: graph,
     defaultLink: new joint.dia.Link({
         attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
@@ -98,6 +98,28 @@ $("#executeForm").change(function(){
         }
 
 });
+// handle drag event
+function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.dataTransfer.files; // FileList object.
+
+    var formdata = new FormData();
+    formdata.append('file', files[0]);
+    execute(graph, formdata);
+}
+
+function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
+// Setup the dnd listeners.
+var dropZone = document.getElementById('myholder');
+dropZone.addEventListener('dragover', handleDragOver, false);
+dropZone.addEventListener('drop', handleFileSelect, false);
 
 function registerIdNameList(element){
     id_name_dir[element.get('mlattrs')['name']] = element.id;
@@ -269,12 +291,12 @@ function createVisualizer(graph){
 }
 
 var timer_check_result;
-function execute(_graph){
+function execute(_graph, formData){
     var structure = integrateToArray(_graph);
     console.log(data);
 
-    var form = $('#executeForm').get()[0];
-    var formData = new FormData(form);
+    //var form = $('#executeForm').get()[0];
+    //var formData = new FormData(form);
 
     formData.append('structure', JSON.stringify(structure));
 
@@ -338,10 +360,6 @@ function applyResult(graph, result){
                 case ('Visualizer'):
                 applyResultVisualizer(graph, element, row);
                 break;
-
-                case ('Model'):
-                applyResultModel(graph, element, row);
-                break;
             }
         }
     });
@@ -353,6 +371,11 @@ function applyResultVisualizer(graph, element, result){
 
     _.each(graph.getNeighbors(element), function(neighbor){
         if (neighbor instanceof joint.shapes.html.Element){
+            neighbor.remove();
+        }
+    });
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.erd.Entity){
             neighbor.remove();
         }
     });
@@ -371,15 +394,6 @@ function applyResultVisualizer(graph, element, result){
 
         graph.addCells([el1, element, l]);
     }
-}
-
-function applyResultModel(graph, element, result){
-    _.each(graph.getNeighbors(element), function(neighbor){
-        if (neighbor instanceof joint.shapes.erd.Entity){
-            neighbor.remove();
-        }
-    });
-
     if ('predict_class' in result) {
         var cell = new joint.shapes.erd.Entity({
             position: { x: 200, y: 200 },
