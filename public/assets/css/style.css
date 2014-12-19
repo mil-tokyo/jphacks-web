@@ -31,6 +31,10 @@ body{
 	background-color: black;
 }
 
+#pallet .panel-heading a{
+	display: block;
+}
+
 #pallet .panel-body {
 	border: 0;
 	background-color: black;
