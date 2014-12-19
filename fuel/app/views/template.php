@@ -73,13 +73,6 @@
 <?php echo $content; ?>
 			</div>
 		</div>
-		<hr/>
-		<footer>
-			<p class="pull-right"></p>
-			<p>
-				
-			</p>
-		</footer>
 	</div>
 
 	<?php if(isset($js)): ?>
