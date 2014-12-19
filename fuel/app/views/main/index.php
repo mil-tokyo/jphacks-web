@@ -4,11 +4,12 @@
         </div>
         <div class="row" id="tool">
             <div class="col-md-3">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">
+                    Quick Start
+                </button>
                 <div id="pallet-wrapper" class="col-md-3">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">
-                        Quick Start
-                    </button>
+                    <h4 class="text-center">Advanced</h4>
                     <hr>
                     <div class="panel-group" id="pallet" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
@@ -139,12 +140,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <hr>
-                    <a class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;">Clear</a>
-
                     
                 </div>
+
+                <button class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;">Clear</button>
             </div>
 
             <div class="col-md-9">
@@ -174,7 +173,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Easy to Go</h4>
+                <h4 class="modal-title" id="myModalLabel">Quick Start</h4>
             </div>
             <div class="modal-body">
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.KMeans();" data-dismiss="modal">
