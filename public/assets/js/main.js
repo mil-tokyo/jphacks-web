@@ -1,4 +1,5 @@
 loadSample = {};
+util = {};
 
 (function() {
 
@@ -271,6 +272,10 @@ function getIdByName(name){
     return id_name_dir[name];
 }
 
+function removeIdByName(name){
+    delete id_name_dir[name];
+}
+
 function appendImageToElement(element, paper, img_path){
     var img = document.createElementNS('http://www.w3.org/2000/svg','image');
     img.setAttributeNS(null,'height', icon_height);
@@ -285,6 +290,17 @@ function appendImageToElement(element, paper, img_path){
     $svg = $svg.find('.body');
     $svg.attr('fill', '#efefef');
     $svg.attr('stroke', 'none');
+}
+
+util.clearGraph = function clearGraph(){
+    _.each(graph.getElements(), function(element){
+        graph.removeLinks(element);
+        var name = element.get('mlattrs') ? element.get('mlattrs')['name'] : '';
+        if (name !== 'source'){
+            removeIdByName(name);
+            element.remove();
+        }
+    });
 }
 
 function createKmeans(graph){
@@ -508,6 +524,8 @@ function execute(_graph, formData){
 }
 
 function applyResult(graph, result){
+    console.log('result');
+    console.log(result);
     _.each(result, function(row){
         var name = row['name'];
         var element = graph.getCell(id_name_dir[name]);

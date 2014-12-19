@@ -144,6 +144,7 @@
                     </div>
                 </div>
 
+                <a class="btn btn-danger" href="#" onclick="util.clearGraph(); return false;">Clear</a>
                 <!--
                 <form id="executeForm" enctype="multipart/form-data">
                     <div class="file">
@@ -155,6 +156,7 @@
                 </form>
             -->
             </div>
+
 
         </div>
 
