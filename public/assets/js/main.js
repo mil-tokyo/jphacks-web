@@ -1,3 +1,5 @@
+loadSample = {};
+
 (function() {
 
 var id_name_dir = {};
@@ -98,6 +100,146 @@ $("#executeForm").change(function(){
         }
 
 });
+
+// load sample
+loadSample.KMeans = function(){
+    loadStructure([
+    {
+        "type": "Model",
+        "tmpname": "kmeans1",
+        "model_type": "KMeans",
+        "params": {
+            "n_clusters": 5
+        },
+        "input": "source",
+        "output": "visualizer1"
+    },
+    {
+        "type": "Visualizer",
+        "tmpname": "visualizer1",
+        "input": "kmeans1",
+        "output": ""
+    }
+    ], graph);
+}
+
+loadSample.SVM = function(){
+    loadStructure([
+    {
+        "type": "Model",
+        "tmpname": "svc1",
+        "model_type": "SVC",
+        "params": {
+            "kernel": "linear"
+        },
+        "input": "source",
+        "output": "visualizer1"
+    },
+    {
+        "type": "Visualizer",
+        "tmpname": "visualizer1",
+        "input": "kmeans1",
+        "output": ""
+    }
+    ], graph);
+}
+
+loadSample.LinearReg = function(){
+    loadStructure([
+    {
+        "type": "Model",
+        "tmpname": "linear-reg1",
+        "model_type": "LinearRegression",
+        "params": {},
+        "input": "source",
+        "output": "visualizer1"
+    },
+    {
+        "type": "Visualizer",
+        "tmpname": "visualizer1",
+        "input": "kmeans1",
+        "output": ""
+    }
+    ], graph);
+}
+
+function loadStructure(structure, graph){
+    // create elements
+    var tmpname_name_dir = {};
+    var res;
+    _.each(structure, function(element){
+        switch (element["type"]){
+            case "Model":
+            switch (element["model_type"]){
+                case "KMeans":
+                res = createKmeans(graph);
+                break;
+                case "SVC":
+                res = createSVM(graph);
+                break;
+                case "LinearRegression":
+                res = createLinearReg(graph);
+                break;
+            }
+            break;
+
+            case "Visualizer":
+            res = createVisualizer(graph);
+            break;
+        }
+
+        tmpname_name_dir[element['tmpname']] = res.get('mlattrs')['name'];
+        console.log(element);
+    });
+    console.log(tmpname_name_dir);
+
+    function tmpname_to_name(tmpname){
+        if (tmpname === 'source'){
+            return 'source';
+        } else {
+            return tmpname_name_dir[tmpname];
+        }
+    }
+
+    // connect elements
+    _.each(structure, function(element){
+        var from = graph.getCell(getIdByName(tmpname_to_name(element['tmpname'])));
+        var to = graph.getCell(getIdByName(tmpname_to_name(element['output'])));
+        linkElements(from ,to, graph);
+        var from = graph.getCell(getIdByName(tmpname_to_name(element['input'])));
+        var to = graph.getCell(getIdByName(tmpname_to_name(element['tmpname'])));
+        linkElements(from ,to, graph);
+    });
+}
+
+function linkElements(from, to, graph){
+    if (typeof from !== 'undefined' && typeof to !== 'undefined' && !isNeighbor(from, to, graph)){
+        var l = new joint.shapes.devs.Link({
+            source: {
+                id: from.id,
+                port: 'out'
+            },
+            target: {
+                id: to.id,
+                port: 'in'
+            },
+            attrs: { '.connection' : { 'stroke-width' :  2 }}
+        });
+
+        graph.addCells([from, to, l]);
+    }
+}
+
+function isNeighbor(el1, el2, graph){
+    var neighbors = graph.getNeighbors(el1);
+    for (i in neighbors) {
+        if (neighbors[i].id == el2.id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // handle drag event
 function handleFileSelect(evt) {
     evt.stopPropagation();
@@ -123,6 +265,10 @@ dropZone.addEventListener('drop', handleFileSelect, false);
 
 function registerIdNameList(element){
     id_name_dir[element.get('mlattrs')['name']] = element.id;
+}
+
+function getIdByName(name){
+    return id_name_dir[name];
 }
 
 function appendImageToElement(element, paper, img_path){
@@ -170,6 +316,8 @@ function createKmeans(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/kmeans.png');
     registerIdNameList(m1);
+
+    return m1;
 }
 
 function createSVM(graph){
@@ -201,6 +349,8 @@ function createSVM(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/svm.png');
     registerIdNameList(m1);
+
+    return m1;
 }
 
 function createLinearReg(graph){
@@ -230,6 +380,8 @@ function createLinearReg(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/linreg.png');
     registerIdNameList(m1);
+
+    return m1;
 }
 
 function createImageClassifier(graph){
@@ -261,6 +413,8 @@ function createImageClassifier(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/cls.png');
     registerIdNameList(m1);
+
+    return m1;
 }
 
 function createVisualizer(graph){
@@ -288,6 +442,8 @@ function createVisualizer(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/vis.png');
     registerIdNameList(m1);
+
+    return m1;
 }
 
 var timer_check_result;
@@ -335,6 +491,7 @@ function execute(_graph, formData){
                         queue_id: queue_id
                     },
                     success: function(res){
+                        console.log(res);
                         if (res['stat'] == 1){
                             clearInterval(timer_check_result);
                             applyResult(_graph, res['result']);
