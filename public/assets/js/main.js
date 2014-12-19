@@ -324,7 +324,7 @@ function applyImgInput(graph, element, img){
         }
     });
     _.each(graph.getNeighbors(element), function(neighbor){
-        if (neighbor instanceof joint.shapes.erd.Entity){
+        if (neighbor instanceof joint.shapes.iconbox.Element){
             neighbor.remove();
         }
     });
@@ -356,7 +356,7 @@ function applyCsvInput(graph, element, csv_name){
         }
     });
     _.each(graph.getNeighbors(element), function(neighbor){
-        if (neighbor instanceof joint.shapes.erd.Entity){
+        if (neighbor instanceof joint.shapes.iconbox.Element){
             neighbor.remove();
         }
     });
