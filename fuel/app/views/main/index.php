@@ -3,12 +3,12 @@
             <div id="loading-img"><?php echo \Asset::img('loading.gif'); ?></div>
         </div>
         <div class="row" id="tool">
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">
                     Quick Start
                 </button>
-                <div id="pallet-wrapper" class="col-md-3">
+                <div id="pallet-wrapper">
                     <h4 class="text-center">Advanced</h4>
                     <hr>
                     <div class="panel-group" id="pallet" role="tablist" aria-multiselectable="true">
@@ -146,7 +146,7 @@
                 <button class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;">Clear</button>
             </div>
 
-            <div class="col-md-9">
+            <div class="col-sm-9">
                 <div id="canvasBox">
                     <div id="myholder">
                     </div>
