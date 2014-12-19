@@ -29,12 +29,6 @@
 				<a href="#"><?php echo \Asset::img('insight_logo.png', array('height'=> '45')); ?></a>
 			</div>
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li class="<?php echo Uri::segment(2) == '' ? 'active' : '' ?>">
-						<?php echo Html::anchor('main', 'Toolbox') ?>
-					</li>
-
-				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="#">About Us</a></li>
 					<li><a href="#">Tutorial</a></li>

@@ -5,6 +5,11 @@
         <div class="row" id="tool">
             <div class="col-md-3">
                 <div id="pallet-wrapper" class="col-md-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">
+                        Quick Start
+                    </button>
+                    <hr>
                     <div class="panel-group" id="pallet" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
@@ -134,6 +139,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr>
+                    <a class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;">Clear</a>
+
                     
                 </div>
             </div>
@@ -143,8 +152,6 @@
                     <div id="myholder">
                     </div>
                 </div>
-
-                <a class="btn btn-danger" href="#" onclick="util.clearGraph(); return false;">Clear</a>
                 <!--
                 <form id="executeForm" enctype="multipart/form-data">
                     <div class="file">
@@ -160,10 +167,6 @@
 
         </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Easy to go
-</button>
 
 <!-- Modal -->
 <div class="modal fade  bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -175,13 +178,13 @@
             </div>
             <div class="modal-body">
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.KMeans();" data-dismiss="modal">
-                    K means
+                    k-means
                 </div>
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.SVM();" data-dismiss="modal">
                     SVM
                 </div>
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.LinearReg();" data-dismiss="modal">
-                    LinearReg
+                    Linear Regression
                 </div>
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.ImageClassifier();" data-dismiss="modal">
                     Image Classification
