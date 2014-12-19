@@ -166,7 +166,7 @@
 
         </div>
 
-
+<a class="btn btn-lg" href="#" onclick="util.getElements(); return false;">GET ELEMENTS</a>
 <!-- Modal -->
 <div class="modal fade  bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-load-sample">

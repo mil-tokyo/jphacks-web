@@ -13,15 +13,17 @@ class Controller_Api extends \Controller_Rest
 		// check if data set
 		$input_exist = false;
 		foreach ($data as &$elem) {
-			if ( isset($elem->data) ){
-				$input_exist = true;
-				break;
-			} else {
-				$data_from_file = $this->load_file();
-				if ($data_from_file){
-					$elem->data = $data_from_file;
+			if ($elem->name === 'source'){
+				if ( isset($elem->data) ){
 					$input_exist = true;
 					break;
+				} else {
+					$data_from_file = $this->load_file();
+					if ($data_from_file){
+						$elem->data = $data_from_file;
+						$input_exist = true;
+						break;
+					}
 				}
 			}
 		}

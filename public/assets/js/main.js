@@ -376,6 +376,11 @@ function applyCsvInput(graph, element, csv_name){
     graph.addCells([cell, element, l]);
 }
 
+util.getElements = function(){
+    console.log(graph.getElements());
+    console.log(graph.getLinks());
+}
+
 // Setup the dnd listeners.
 var dropZone = document.getElementById('myholder');
 dropZone.addEventListener('dragover', handleDragOver, false);
@@ -700,7 +705,7 @@ function applyResult(graph, result){
 function applyResultModel(graph, element, result){
     var mlattrs = element.get('mlattrs');
     for (key in result){
-        if (key !== 'name' || key !== 'type'){
+        if (key !== 'name' && key !== 'type' && key !== 'data' && key !== 'input' && key !== 'output'){
             mlattrs[key] = result[key];
         }
     }
@@ -762,39 +767,50 @@ function applyResultVisualizer(graph, element, result){
 function integrateToArray(graph){
     data = {};
 
-    _.each(graph.getElements(), function(element){
-        _.each(graph.getConnectedLinks(element), function(link){
-            var source_id = link.get('source').id;
-            var target_id = link.get('target').id;
-            var source = graph.getCell(source_id);
-            var target = graph.getCell(target_id);
+    links = graph.getLinks();
+    console.log('links');
+    console.log(links);
+    for (i in links){
+        var link = links[i];
+        var source_id = link.get('source').id;
+        var target_id = link.get('target').id;
+        var source = graph.getCell(source_id);
+        var target = graph.getCell(target_id);
 
-            if (source instanceof MlModel && target instanceof MlModel){
-                var source_name = source.get('mlattrs')['name'];
-                var target_name = target.get('mlattrs')['name'];
-                var source_data = source.get('mlattrs');
-                var target_data = target.get('mlattrs');
+        if (source instanceof MlModel && target instanceof MlModel){
+            var source_name = source.get('mlattrs')['name'];
+            var target_name = target.get('mlattrs')['name'];
+            var source_data = source.get('mlattrs');
+            var target_data = target.get('mlattrs');
 
-                data[source_name] = _.defaults(source.get('mlattrs'), data[source_name]);
-                data[source_name].output = target_name;
-                if (typeof data[source_name].input === "undefined"){
-                    data[source_name].input = "";
-                }
+            if (typeof data[source_name] === 'undefined')
+                data[source_name] = {};
+            if (typeof data[target_name] === 'undefined')
+                data[target_name] = {};
+            
+            delete source_data['input'];
+            delete source_data['output'];
+            delete target_data['input'];
+            delete target_data['output'];
 
-                data[target_name] = _.defaults(target.get('mlattrs'), data[target_name]);
-                data[target_name].input = source_name;
-                if (typeof data[target_name].output === "undefined"){
-                    data[target_name].output = "";
-                }
-            }
-        });
-    });
+            data[source_name] = _.defaults(data[source_name], source_data);
+            data[target_name] = _.defaults(data[target_name], target_data);
+
+
+            data[source_name]['output'] = target_name;
+            data[target_name]['input'] = source_name;
+        }
+    }
 
     dataArr = [];
     _.each(data, function(elem){
+        if (typeof elem.input === 'undefined')
+            elem.input = '';
+        if (typeof elem.output === 'undefined')
+            elem.output = '';
         dataArr.push(elem);
     })
-
+    console.log(dataArr);
     return dataArr;
 }
 }());
