@@ -6,7 +6,7 @@ class Controller_Api extends \Controller_Rest
 		$json = \Input::post('structure');
 		$data = json_decode($json);
 		if ( ! $data ) {
-			$this->response(array('stat' => 0, 'msg' => 'Invalid structure data'));
+			$this->response(array('stat' => 0, 'msg' => 'Invalid structure'));
 			return;
 		}
 

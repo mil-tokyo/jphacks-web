@@ -168,6 +168,24 @@ loadSample.LinearReg = function(){
     }
     ], graph);
 }
+loadSample.ImageClassifier = function(){
+    loadStructure([
+    {
+        "type": "Model",
+        "tmpname": "imclass1",
+        "model_type": "LinearSVC",
+        "params": {},
+        "input": "source",
+        "output": "visualizer1"
+    },
+    {
+        "type": "Visualizer",
+        "tmpname": "visualizer1",
+        "input": "kmeans1",
+        "output": ""
+    }
+    ], graph);
+}
 
 function loadStructure(structure, graph){
     // create elements
@@ -185,6 +203,9 @@ function loadStructure(structure, graph){
                 break;
                 case "LinearRegression":
                 res = createLinearReg(graph);
+                break;
+                case 'LinearSVC':
+                res = createImageClassifier(graph);
                 break;
             }
             break;
@@ -291,8 +312,11 @@ function handleDragOver(evt) {
 
 // Input 
 function applyImgInput(graph, element, img){
-    var x=100;
-    var y=200;
+    var position = element.get('position');
+    var x = position['x'], y = position['y']+150;
+    if (y > height){
+        y = position['y'] - 150;
+    }
 
     _.each(graph.getNeighbors(element), function(neighbor){
         if (neighbor instanceof joint.shapes.html.Element){
@@ -320,8 +344,11 @@ function applyImgInput(graph, element, img){
 }
 
 function applyCsvInput(graph, element, csv_name){
-    var x=100;
-    var y=200;
+    var position = element.get('position');
+    var x = position['x'], y = position['y']+150;
+    if (y > height){
+        y = position['y'] - 150;
+    }
 
     _.each(graph.getNeighbors(element), function(neighbor){
         if (neighbor instanceof joint.shapes.html.Element){
@@ -415,8 +442,6 @@ function decideModelPosition(){
         init_i = Math.min(Math.floor(height/grid_y), Math.max(0, Math.floor(position['y']/grid_y)));
         init_j = Math.min(Math.floor(width/grid_x), Math.max(0, Math.floor(position['x']/grid_x)));
     }
-    console.log(init_i);
-    console.log(init_j);
     for (var i=init_i ; i<map.length ; i++){
         for (var j=init_j ; j<map[i].length ; j++){
             if (map[i][j] == false){
@@ -697,6 +722,12 @@ function applyResultVisualizer(graph, element, result){
         }
     });
 
+    var position = element.get('position');
+    var x = position['x'], y = position['y']+150;
+    if (y > height){
+        y = position['y'] - 150;
+    }
+
     if ('img_src' in result){
         var el1 = new joint.shapes.html.Element({
             position: { x: x, y: y },
@@ -713,7 +744,7 @@ function applyResultVisualizer(graph, element, result){
     }
     if ('predict_class' in result) {
         var cell = new joint.shapes.erd.Entity({
-            position: { x: 200, y: 200 },
+            position: { x: x, y: y },
             attrs: {
                 text: { text: result['predict_class'], "font-size": "32px" },
             }

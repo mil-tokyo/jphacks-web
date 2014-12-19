@@ -183,6 +183,9 @@
                 <div class="btn btn-default btn-load-sample" onclick="loadSample.LinearReg();" data-dismiss="modal">
                     LinearReg
                 </div>
+                <div class="btn btn-default btn-load-sample" onclick="loadSample.ImageClassifier();" data-dismiss="modal">
+                    Image Classification
+                </div>
                 <p class="clearfix"></p>
             </div>
             <div class="modal-footer">
