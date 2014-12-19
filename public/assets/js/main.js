@@ -4,10 +4,14 @@ util = {};
 (function() {
 
 var id_name_dir = {};
+var width = 800, height = 500;
+var grid_x = 200;
+var grid_y = 120
+var lastAddedElement = null;
 var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
     el: $('#myholder'),
-    width: 1000, height: 500, gridSize: 1,
+    width: width, height: height, gridSize: 1,
     model: graph,
     defaultLink: new joint.dia.Link({
         attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
@@ -34,7 +38,7 @@ var icon_left = (panel_width - icon_width)/2, icon_top = (panel_height - icon_he
 
 // create input object
 var input_model = new MlModel({
-    position: { x: 50, y: 50 },
+    position: decideModelPosition(),
     size: { width: panel_width, height: panel_height },
     //inPorts: ['in'],
     outPorts: ['out'],
@@ -57,6 +61,7 @@ graph.addCell(input_model);
 registerIdNameList(input_model);
 
 appendImageToElement(input_model, paper, 'assets/img/input.png');
+lastAddedElement = input_model;
 
 $("#new-kmeans").click(function(){
     createKmeans(graph);
@@ -384,8 +389,43 @@ util.clearGraph = function clearGraph(){
         if (name !== 'source'){
             removeIdByName(name);
             element.remove();
+            lastAddedElement = input_model;
         }
     });
+}
+
+function decideModelPosition(){
+    var map = new Array(Math.floor(height/grid_y));
+    for (var i=0 ; i<map.length ; i++){
+        map[i] = new Array(Math.floor(width/grid_x));
+        for (var j=0 ; j<map[i].length ; j++){
+            map[i][j] = false;
+        }
+    }
+    _.each(graph.getElements(), function(element){
+        var position = element.get('position');
+        var gy = Math.min(Math.floor(height/grid_y), Math.max(0,Math.floor(position['y']/grid_y)));
+        var gx = Math.min(Math.floor(width/grid_x), Math.max(0,Math.floor(position['x']/grid_x)));
+        map[gy][gx] = true;
+    });
+
+    var init_i=0, init_j=0;
+    if (lastAddedElement){
+        var position = lastAddedElement.get('position');
+        init_i = Math.min(Math.floor(height/grid_y), Math.max(0, Math.floor(position['y']/grid_y)));
+        init_j = Math.min(Math.floor(width/grid_x), Math.max(0, Math.floor(position['x']/grid_x)));
+    }
+    console.log(init_i);
+    console.log(init_j);
+    for (var i=init_i ; i<map.length ; i++){
+        for (var j=init_j ; j<map[i].length ; j++){
+            if (map[i][j] == false){
+                return {x: j*grid_x, y: i*grid_y};
+            }
+        }
+    }
+
+    return {x: 100, y:100};
 }
 
 function createKmeans(graph){
@@ -395,7 +435,7 @@ function createKmeans(graph){
     createKmeans.count++;
 
     var m1 = new MlModel({
-        position: { x: 50, y: 50 },
+        position: decideModelPosition(),
         size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -417,6 +457,7 @@ function createKmeans(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/kmeans.png');
     registerIdNameList(m1);
+    lastAddedElement = m1;
 
     return m1;
 }
@@ -428,7 +469,7 @@ function createSVM(graph){
     createSVM.count++;
 
     var m1 = new MlModel({
-        position: { x: 50, y: 50 },
+        position: decideModelPosition(),
         size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -450,6 +491,7 @@ function createSVM(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/svm.png');
     registerIdNameList(m1);
+    lastAddedElement = m1;
 
     return m1;
 }
@@ -461,7 +503,7 @@ function createLinearReg(graph){
     createLinearReg.count++;
 
     var m1 = new MlModel({
-        position: { x: 50, y: 50 },
+        position: decideModelPosition(),
         size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -481,6 +523,7 @@ function createLinearReg(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/linreg.png');
     registerIdNameList(m1);
+    lastAddedElement = m1;
 
     return m1;
 }
@@ -492,7 +535,7 @@ function createImageClassifier(graph){
     createImageClassifier.count++;
 
     var m1 = new MlModel({
-        position: { x: 50, y: 50 },
+        position: decideModelPosition(),
         size: { width: panel_width, height: panel_height },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -514,6 +557,7 @@ function createImageClassifier(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/cls.png');
     registerIdNameList(m1);
+    lastAddedElement = m1;
 
     return m1;
 }
@@ -525,7 +569,7 @@ function createVisualizer(graph){
     createVisualizer.count++;
 
     var m1 = new MlModel({
-        position: { x: 50, y: 50 },
+        position: decideModelPosition(),
         size: { width: panel_width, height: panel_width },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -543,6 +587,7 @@ function createVisualizer(graph){
     graph.addCell(m1);
     appendImageToElement(m1, paper, 'assets/img/vis.png');
     registerIdNameList(m1);
+    lastAddedElement = m1;
 
     return m1;
 }
