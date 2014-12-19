@@ -9,7 +9,7 @@ class Create_results
 		\DBUtil::create_table('results', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true, 'unsigned' => true),
 			'queue_id' => array('constraint' => 11, 'type' => 'int', 'unsigned' => true),
-			'json' => array('type' => 'text'),
+			'json' => array('type' => 'longtext'),
 			'created_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 			'updated_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 

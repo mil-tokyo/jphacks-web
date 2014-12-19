@@ -33,7 +33,7 @@ var icon_width = 100, icon_height = 100;
 var icon_left = (panel_width - icon_width)/2, icon_top = (panel_height - icon_height)/2;
 
 // create input object
-var m1 = new MlModel({
+var input_model = new MlModel({
     position: { x: 50, y: 50 },
     size: { width: panel_width, height: panel_height },
     //inPorts: ['in'],
@@ -53,10 +53,10 @@ var m1 = new MlModel({
         }*/
     }
 });
-graph.addCell(m1);
-registerIdNameList(m1);
+graph.addCell(input_model);
+registerIdNameList(input_model);
 
-appendImageToElement(m1, paper, 'assets/img/input.png');
+appendImageToElement(input_model, paper, 'assets/img/input.png');
 
 $("#new-kmeans").click(function(){
     createKmeans(graph);
@@ -247,9 +247,34 @@ function handleFileSelect(evt) {
     evt.preventDefault();
 
     var files = evt.dataTransfer.files; // FileList object.
+    var f = files[0];
+
+    console.log(f.type);
+    // Only process image or csv files.
+    if (!f.type.match('image.*') && !f.type.match('text/csv')) {
+        alert('Not allowed file type');
+        return false;
+    }
+
+    if (f.type.match('image.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+            return function(e) {
+                applyImgInput(graph, input_model, e.target.result);
+            };
+        })(f);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+    } else if (f.type.match('text/csv')){
+        console.log(f);
+        applyCsvInput(graph, input_model, f.name);
+    }
 
     var formdata = new FormData();
-    formdata.append('file', files[0]);
+    formdata.append('file', f);
     execute(graph, formdata);
 }
 
@@ -257,6 +282,66 @@ function handleDragOver(evt) {
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
+// Input 
+function applyImgInput(graph, element, img){
+    var x=100;
+    var y=200;
+
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.html.Element){
+            neighbor.remove();
+        }
+    });
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.erd.Entity){
+            neighbor.remove();
+        }
+    });
+
+    var el1 = new joint.shapes.html.Element({
+        position: { x: x, y: y },
+        size: { width: 170, height: 100 },
+        img: img }
+        );
+    var l = new joint.dia.Link({
+        source: { id: el1.id },
+        target: { id: element.id },
+        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+    });
+
+    graph.addCells([el1, element, l]);
+}
+
+function applyCsvInput(graph, element, csv_name){
+    var x=100;
+    var y=200;
+
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.html.Element){
+            neighbor.remove();
+        }
+    });
+    _.each(graph.getNeighbors(element), function(neighbor){
+        if (neighbor instanceof joint.shapes.erd.Entity){
+            neighbor.remove();
+        }
+    });
+
+    var cell = new joint.shapes.erd.Entity({
+        position: { x: x, y: y },
+        attrs: {
+            text: { text: csv_name, "font-size": "18px" },
+        }
+    });
+    var l = new joint.dia.Link({
+        source: { id: cell.id },
+        target: { id: element.id },
+        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+    });
+
+    graph.addCells([cell, element, l]);
 }
 
 // Setup the dnd listeners.
@@ -443,7 +528,7 @@ function createVisualizer(graph){
         position: { x: 50, y: 50 },
         size: { width: panel_width, height: panel_width },
         inPorts: ['in'],
-        //outPorts: ['out'],
+        outPorts: ['out'],
         attrs: {
             '.label': { text: '', 'ref-x': .4, 'ref-y': .2 },
             rect: { fill: '#2ECC71' },
@@ -507,6 +592,8 @@ function execute(_graph, formData){
                         queue_id: queue_id
                     },
                     success: function(res){
+                        console.log('res');
+                        console.log(res);
                         if (res['stat'] == 1){
                             clearInterval(timer_check_result);
                             applyResult(_graph, res['result']);
@@ -524,8 +611,6 @@ function execute(_graph, formData){
 }
 
 function applyResult(graph, result){
-    console.log('result');
-    console.log(result);
     _.each(result, function(row){
         var name = row['name'];
         var element = graph.getCell(id_name_dir[name]);
@@ -549,8 +634,6 @@ function applyResultModel(graph, element, result){
             mlattrs[key] = result[key];
         }
     }
-    console.log('mlattrs');
-    console.log(mlattrs);
     element.set('mlattrs', mlattrs);
 }
 
