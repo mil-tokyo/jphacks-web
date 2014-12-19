@@ -98,6 +98,18 @@ body{
 	margin-top: 10px;
 }
 
+.modal-load-sample{
+	width: 100%;
+}
+
+.btn-load-sample{
+	width: 200px;
+	height: 200px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	float: left;
+}
+
 .file {
   display: inline-block;
   overflow: hidden;

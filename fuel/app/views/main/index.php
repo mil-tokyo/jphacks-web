@@ -164,27 +164,27 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade  bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-load-sample">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Easy to Go</h4>
             </div>
             <div class="modal-body">
-                <div class="btn-easy-structure" onclick="loadSample.KMeans();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample" onclick="loadSample.KMeans();" data-dismiss="modal">
                     K means
                 </div>
-                <div class="btn-easy-structure" onclick="loadSample.SVM();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample" onclick="loadSample.SVM();" data-dismiss="modal">
                     SVM
                 </div>
-                <div class="btn-easy-structure" onclick="loadSample.LinearReg();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample" onclick="loadSample.LinearReg();" data-dismiss="modal">
                     LinearReg
                 </div>
+                <p class="clearfix"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
