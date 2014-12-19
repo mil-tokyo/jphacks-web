@@ -121,10 +121,15 @@ body{
 
 .btn-load-sample{
 	width: 200px;
-	height: 200px;
+	height: 250px;
 	margin-left: 10px;
 	margin-bottom: 10px;
+	white-space: normal;
 	float: left;
+}
+
+.btn-load-sample div{
+	width: 100%;
 }
 
 .file {
