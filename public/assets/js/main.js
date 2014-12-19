@@ -361,12 +361,14 @@ function applyCsvInput(graph, element, csv_name){
         }
     });
 
-    var cell = new joint.shapes.erd.Entity({
+    //var cell = new joint.shapes.erd.Entity({
+    var cell = new joint.shapes.iconbox.Element({
         position: { x: x, y: y },
-        attrs: {
-            text: { text: csv_name, "font-size": "18px" },
-        }
+        size: { width: 250, height: 50 },
+        img: 'http://essent.us/wp-content/uploads/2011/01/excel-icon.jpg',
+        label: csv_name
     });
+    console.log(cell);
     var l = new joint.dia.Link({
         source: { id: cell.id },
         target: { id: element.id },

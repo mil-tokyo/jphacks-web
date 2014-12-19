@@ -8,6 +8,7 @@ class Controller_Main extends \Controller_Base
 		$this->template->css = array(
             'joint.min.css',
             'joint.shapes.imgbox.css',
+            'joint.shapes.iconbox.css',
             'bootstrap.min.css',
             'style.css'
         );
@@ -17,6 +18,7 @@ class Controller_Main extends \Controller_Base
             'joint.shapes.devs.min.js',
             'joint.shapes.erd.min.js',
             'joint.shapes.imgbox.js',
+            'joint.shapes.iconbox.js',
             'joint.shapes.devs.mlmodel.js',
             'main.js'
         );
