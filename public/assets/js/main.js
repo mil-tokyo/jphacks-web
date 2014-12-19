@@ -378,10 +378,6 @@ function applyCsvInput(graph, element, csv_name){
     graph.addCells([cell, element, l]);
 }
 
-util.getElements = function(){
-    console.log(graph.getElements());
-    console.log(graph.getLinks());
-}
 
 // Setup the dnd listeners.
 var dropZone = document.getElementById('myholder');
