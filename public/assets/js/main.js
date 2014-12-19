@@ -4,7 +4,7 @@ util = {};
 (function() {
 
 var id_name_dir = {};
-var width = 800, height = 500;
+var width = 680, height = 500;
 var grid_x = 200;
 var grid_y = 120
 var lastAddedElement = null;
