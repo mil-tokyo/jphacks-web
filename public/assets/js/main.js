@@ -491,7 +491,6 @@ function execute(_graph, formData){
                         queue_id: queue_id
                     },
                     success: function(res){
-                        console.log(res);
                         if (res['stat'] == 1){
                             clearInterval(timer_check_result);
                             applyResult(_graph, res['result']);
@@ -514,12 +513,27 @@ function applyResult(graph, result){
         var element = graph.getCell(id_name_dir[name]);
         if (element) {
             switch (element.get('mlattrs')['type']){
+                case ("Model"):
+                applyResultModel(graph, element, row);
+                break;
                 case ('Visualizer'):
                 applyResultVisualizer(graph, element, row);
                 break;
             }
         }
     });
+}
+
+function applyResultModel(graph, element, result){
+    var mlattrs = element.get('mlattrs');
+    for (key in result){
+        if (key !== 'name' || key !== 'type'){
+            mlattrs[key] = result[key];
+        }
+    }
+    console.log('mlattrs');
+    console.log(mlattrs);
+    element.set('mlattrs', mlattrs);
 }
 
 function applyResultVisualizer(graph, element, result){
