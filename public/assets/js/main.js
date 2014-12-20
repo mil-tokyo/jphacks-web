@@ -716,12 +716,9 @@ function applyResultVisualizer(graph, element, result){
     var y=200;
 
     _.each(graph.getNeighbors(element), function(neighbor){
-        if (neighbor instanceof joint.shapes.html.Element){
-            neighbor.remove();
-        }
-    });
-    _.each(graph.getNeighbors(element), function(neighbor){
-        if (neighbor instanceof joint.shapes.erd.Entity){
+        if (neighbor instanceof joint.shapes.html.Element
+            || neighbor instanceof joint.shapes.labelbox.Element
+            || neighbor instanceof joint.shapes.iconbox.Element){
             neighbor.remove();
         }
     });
