@@ -295,7 +295,7 @@ function handleFileSelect(evt) {
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-    } else if (f.type.match('text/csv')){
+    } else if (f.type.match('text/csv') || f.type.match('application/vnd.ms-excel')){
         console.log(f);
         applyCsvInput(graph, input_model, f.name);
     }
