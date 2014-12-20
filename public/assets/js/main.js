@@ -8,6 +8,7 @@ var width = 680, height = 600;
 var grid_x = 200;
 var grid_y = 120
 var lastAddedElement = null;
+var lineWithSubPanel = { 'stroke-width': 3, stroke: '#34495E', 'stroke-dasharray': 5 };
 var graph = new joint.dia.Graph;
 var paper = new joint.dia.Paper({
     el: $('#myholder'),
@@ -337,7 +338,7 @@ function applyImgInput(graph, element, img){
     var l = new joint.dia.Link({
         source: { id: el1.id },
         target: { id: element.id },
-        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+        attrs: { '.connection': lineWithSubPanel }
     });
 
     graph.addCells([el1, element, l]);
@@ -372,7 +373,7 @@ function applyCsvInput(graph, element, csv_name){
     var l = new joint.dia.Link({
         source: { id: cell.id },
         target: { id: element.id },
-        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+        attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E', 'stroke-dasharray': 5 } }
     });
 
     graph.addCells([cell, element, l]);
@@ -740,7 +741,7 @@ function applyResultVisualizer(graph, element, result){
         var l = new joint.dia.Link({
             source: { id: el1.id },
             target: { id: element.id },
-            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E', 'stroke-dasharray': 5 } }
         });
 
         graph.addCells([el1, element, l]);
@@ -755,7 +756,7 @@ function applyResultVisualizer(graph, element, result){
         var l = new joint.dia.Link({
             source: { id: cell.id },
             target: { id: element.id },
-            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E' } }
+            attrs: { '.connection': { 'stroke-width': 5, stroke: '#34495E', 'stroke-dasharray': 5 } }
         });
 
         graph.addCells([cell, element, l]);
