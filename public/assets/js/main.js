@@ -278,7 +278,7 @@ function handleFileSelect(evt) {
 
     console.log(f.type);
     // Only process image or csv files.
-    if (!f.type.match('image.*') && !f.type.match('text/csv')) {
+    if (!f.type.match('image.*') && !f.type.match('text/csv') && !f.type.match('application/vnd.ms-excel')) {
         alert('Not allowed file type');
         return false;
     }
