@@ -135,10 +135,27 @@ body{
 	margin-bottom: 10px;
 	white-space: normal;
 	float: left;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	background-position-y: 100px;
 }
 
 .btn-load-sample div{
+	display: relative;
 	width: 100%;
+}
+
+.btn-load-sample.kmeans{
+	background-image: url('../img/kmeans.png');
+}
+.btn-load-sample.svm{
+	background-image: url('../img/svm.png');
+}
+.btn-load-sample.linreg{
+	background-image: url('../img/linreg.png');
+}
+.btn-load-sample.cls{
+	background-image: url('../img/cls.png');
 }
 
 .file {

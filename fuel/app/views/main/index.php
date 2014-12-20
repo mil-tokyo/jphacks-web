@@ -175,27 +175,25 @@
                 <h4 class="modal-title" id="myModalLabel">Quick Start</h4>
             </div>
             <div class="modal-body">
-                <div class="btn btn-default btn-load-sample" onclick="loadSample.KMeans();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample kmeans" onclick="loadSample.KMeans();" data-dismiss="modal">
                     <h4>k-means</h4>
                     <p>
-                        データ点をk個のクラスター（近い点同士の集まり）に分割します．
+                        データ点をいくつかの集まりに分割します．
                     </p>
                 </div>
-                <div class="btn btn-default btn-load-sample" onclick="loadSample.SVM();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample svm" onclick="loadSample.SVM();" data-dismiss="modal">
                     <h4>SVM</h4>
                     <p>
-                        データ点を2つのクラスに分類します．<br>
-                        初めにクラスラベル付きデータを入力してモデルを学習し，<br>
-                        学習したモデルに対して識別したいクラスラベル未知のデータを入力します．
+                        データ点を2つのクラスに分類します．
                     </p>
                 </div>
-                <div class="btn btn-default btn-load-sample" onclick="loadSample.LinearReg();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample linreg" onclick="loadSample.LinearReg();" data-dismiss="modal">
                     <h4>Linear Regression</h4>
                     <p>
                         データ点を最もよく近似する直線を求めます．
                     </p>
                 </div>
-                <div class="btn btn-default btn-load-sample" onclick="loadSample.ImageClassifier();" data-dismiss="modal">
+                <div class="btn btn-default btn-load-sample cls" onclick="loadSample.ImageClassifier();" data-dismiss="modal">
                     <h4>Image Classification</h4>
                     <p>
                         入力画像に写っている物体の名称を得ます．
