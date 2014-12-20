@@ -747,7 +747,10 @@ function applyResultVisualizer(graph, element, result){
         graph.addCells([el1, element, l]);
     }
     if ('predict_class' in result) {
-        var cell = new joint.shapes.erd.Entity({
+        //var cell = new joint.shapes.erd.Entity({
+        var cell = new joint.shapes.labelbox.Element({
+            label: result['predict_class'],
+            size: {width: 200, height: 50},
             position: { x: x, y: y },
             attrs: {
                 text: { text: result['predict_class'], "font-size": "32px" },

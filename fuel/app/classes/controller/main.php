@@ -9,6 +9,7 @@ class Controller_Main extends \Controller_Base
             'joint.min.css',
             'joint.shapes.imgbox.css',
             'joint.shapes.iconbox.css',
+            'joint.shapes.labelbox.css',
             'bootstrap.min.css',
             'style.css'
         );
@@ -19,6 +20,7 @@ class Controller_Main extends \Controller_Base
             'joint.shapes.erd.min.js',
             'joint.shapes.imgbox.js',
             'joint.shapes.iconbox.js',
+            'joint.shapes.labelbox.js',
             'joint.shapes.devs.mlmodel.js',
             'main.js'
         );
