@@ -3,7 +3,7 @@
             <div id="loading-img"><?php echo \Asset::img('loading.gif'); ?></div>
         </div>
         <div class="row" id="tool">
-            <div class="col-sm-3">
+            <div class="col-xs-3">
                 <!-- Button trigger modal -->
                 <button type="button" id="btn-quick-start" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-flash" style="font-size: 1.2em;"></span>&nbsp;&nbsp;Quick Start
@@ -146,7 +146,7 @@
                 <button id="btn-clear" class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Clear</button>
             </div>
 
-            <div class="col-sm-9">
+            <div class="col-xs-9">
                 <div id="canvasBox">
                     <div id="myholder">
                     </div>
