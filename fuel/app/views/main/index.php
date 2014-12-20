@@ -9,7 +9,7 @@
                     <span class="glyphicon glyphicon-flash" style="font-size: 1.2em;"></span>&nbsp;&nbsp;Quick Start
                 </button>
                 <div id="pallet-wrapper">
-                    <h4 class="text-center">Advanced</h4>
+                    <h4 class="text-center"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Advanced</h4>
                     <hr>
                     <div class="panel-group" id="pallet" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
@@ -143,7 +143,7 @@
                     
                 </div>
 
-                <button class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;">Clear</button>
+                <button id="btn-clear" class="btn btn-danger btn-block" href="#" onclick="util.clearGraph(); return false;"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Clear</button>
             </div>
 
             <div class="col-sm-9">
