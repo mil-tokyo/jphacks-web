@@ -119,6 +119,10 @@ body{
 	width: 90%;
 }
 
+#btn-quick-start{
+	font-size: 1.5em;
+}
+
 .btn-load-sample{
 	width: 200px;
 	height: 250px;

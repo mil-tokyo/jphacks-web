@@ -5,8 +5,8 @@
         <div class="row" id="tool">
             <div class="col-sm-3">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">
-                    Quick Start
+                <button type="button" id="btn-quick-start" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-flash" style="font-size: 1.2em;"></span>&nbsp;&nbsp;Quick Start
                 </button>
                 <div id="pallet-wrapper">
                     <h4 class="text-center">Advanced</h4>
