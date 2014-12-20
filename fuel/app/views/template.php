@@ -8,6 +8,7 @@
 	<?php else: ?>
 	<?php echo Asset::css('bootstrap.css'); ?>
 	<?php endif; ?>
+	<link rel="shortcut icon" href="assets/img/favicon.ico" />
 	<style>
 		body { margin: 50px; }
 	</style>
